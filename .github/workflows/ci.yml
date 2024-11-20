@@ -20,7 +20,7 @@ jobs:
       uses: docker/login-action@v2  # Se connecte à DockerHub avec vos identifiants
       with:
         username: ${{ secrets.DOCKER_USERNAME }}  # Utilise un secret pour le nom d'utilisateur Docker Hub
-        password: ${{ secrets.DOCKER_PASSWORD }}  # Utilise un secret pour le mot de passe Docker Hub
+        password: ${{ secrets.DOCKER_TOKEN}}  # Utilise un secret pour le mot de passe Docker Hub
 
     - name: Build and push Docker image
       run: |
