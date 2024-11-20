@@ -1,0 +1,28 @@
+name: Build and Deploy Docker Image
+
+on:
+  push:
+    branches:
+      - main  # Cela déclenche l'action sur chaque push vers la branche 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Utilise une machine virtuelle Ubuntu pour le job
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # Vérifie le code source depuis le repository
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2  # Configure Docker Buildx pour la construction multiplateforme
+
+    - name: Log in to DockerHub
+      uses: docker/login-action@v2  # Se connecte à DockerHub avec vos identifiants
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}  # Utilise un secret pour le nom d'utilisateur Docker Hub
+        password: ${{ secrets.DOCKER_PASSWORD }}  # Utilise un secret pour le mot de passe Docker Hub
+
+    - name: Build and push Docker image
+      run: |
+        docker build -t your-dockerhub-username/hello-world-python .  # Construire l'image Docker
+        docker push your-dockerhub-username/hello-world-python  # Pousser l'image sur Docker Hub
